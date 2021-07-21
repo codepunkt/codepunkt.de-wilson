@@ -1,0 +1,29 @@
+{
+  "name": "codepunkt.de",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "start": "wilson",
+    "build": "wilson build",
+    "serve": "wilson serve"
+  },
+  "engines": {
+    "node": "^14.16.0",
+    "yarn": "^1.22.10"
+  },
+  "dependencies": {
+    "hoofd": "^1.2.2",
+    "preact": "^10.5.13",
+    "preact-iso": "^2.0.3",
+    "typeface-fira-code": "^1.1.13",
+    "typeface-montserrat": "^1.1.13",
+    "typeface-open-sans": "^1.1.13",
+    "vscode-styled-components": "styled-components/vscode-styled-components",
+    "what-input": "^5.2.10"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.37",
+    "sass": "^1.32.8",
+    "slack-theme": "slack-theme/visual-studio-code"
+  }
+}

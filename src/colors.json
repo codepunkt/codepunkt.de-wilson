@@ -1,0 +1,54 @@
+{
+  "bg": {
+    "light": "#f0f7f2",
+    "dark": "#15202b"
+  },
+  "bg-alt": {
+    "light": "#e6efe8",
+    "dark": "#0e1923"
+  },
+  "text": {
+    "light": "#28342b",
+    "dark": "#C5C5DD"
+  },
+  "logo": {
+    "light": "#28342b",
+    "dark": "#fff"
+  },
+  "line": {
+    "light": "#9cc989",
+    "dark": "#703ea0"
+  },
+  "indicator": {
+    "light": "#318513",
+    "dark": "#8e4da0"
+  },
+  "headline": {
+    "light": "#286b10",
+    "dark": "#fff"
+  },
+  "code": {
+    "light": "#2f86da",
+    "dark": "#d0dcaa"
+  },
+  "code-bg": {
+    "light": "#fff",
+    "dark": "#0e1923"
+  },
+  "code-inline-bg": {
+    "light": "#fff",
+    "dark": "#1f2f3e"
+  },
+  "line-numbers": {
+    "light": "#c0cdc4",
+    "dark": "#4b566c"
+  },
+  "link": {
+    "light": "#415CFF",
+    "dark": "#ffe299"
+  },
+  "link-line": {
+    "light": "#7c8c80",
+    "dark": "#62809e"
+  }
+}

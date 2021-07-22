@@ -24,6 +24,7 @@
   "devDependencies": {
     "@types/node": "^14.14.37",
     "sass": "^1.32.8",
-    "slack-theme": "slack-theme/visual-studio-code"
+    "slack-theme": "slack-theme/visual-studio-code",
+    "terser": "^5.7.1"
   }
 }

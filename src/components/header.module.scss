@@ -1,5 +1,3 @@
-@import '../assets/mixins.scss';
-
 .header {
   display: flex;
   justify-content: space-between;
@@ -9,18 +7,17 @@
   height: var(--header-height);
 }
 
+.logoLink {
+  z-index: 3;
+}
+
 .logo {
   height: var(--logo-height);
   margin-top: calc(var(--logo-height) / 5);
-  z-index: 2;
 
   [class~='wordmark'] {
-    display: none;
     color: var(--color-logo);
     fill: currentColor;
-    @include responsive(xs) {
-      display: inline;
-    }
   }
 
   [class~='logomark'] {

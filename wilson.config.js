@@ -1,3 +1,32 @@
+const Terser = require('terser')
+const colors = require('./src/colors.json')
+
+const setCssVariables = () => {
+  const preferDarkQuery = '(prefers-color-scheme: dark)'
+  const mediaQueryList = window.matchMedia(preferDarkQuery)
+  const supportsColorSchemeQuery = mediaQueryList.media === preferDarkQuery
+
+  const persistedColorMode = localStorage.getItem('color-mode')
+
+  let colorMode = 'light'
+  if (typeof persistedColorMode === 'string') {
+    colorMode = persistedColorMode
+  } else if (supportsColorSchemeQuery) {
+    colorMode = mediaQueryList.matches ? 'dark' : 'light'
+  }
+
+  let root = document.documentElement
+  root.style.setProperty('--initial-color-mode', colorMode)
+  root.setAttribute('data-mode', colorMode)
+
+  Object.entries(window.__CODEPUNKT__.colors).forEach(
+    ([name, colorByTheme]) => {
+      const cssVarName = `--color-${name}`
+      root.style.setProperty(cssVarName, colorByTheme[colorMode])
+    }
+  )
+}
+
 /**
  * @type { import('wilson').SiteConfig }
  */
@@ -9,6 +38,22 @@ module.exports = {
     description: 'Musings about web development and cloud technology.',
     author: 'Christoph Werner',
     lang: 'en',
+  },
+  injectHead: async () => {
+    return `<script>
+      window.__CODEPUNKT__={colors:${JSON.stringify(colors)}};
+      ${(await Terser.minify(`(${String(setCssVariables)})()`)).code};
+    </script>
+    <style>${['light', 'dark']
+      .map(
+        (mode) =>
+          `:root[data-mode=${mode}]{${Object.entries(colors)
+            .map(
+              ([name, colors]) => `--color-${name}:${colors[mode]}!important;`
+            )
+            .join('')}}`
+      )
+      .join('')}</style>`
   },
   pageLayouts: [
     { pattern: 'writing/**/*', layout: 'blog' },

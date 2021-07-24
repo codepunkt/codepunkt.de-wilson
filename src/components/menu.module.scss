@@ -1,3 +1,5 @@
+@import '../assets/mixins.scss';
+
 .wrapper {
   display: flex;
   align-items: center;
@@ -7,24 +9,34 @@
 .smallMenu {
   display: flex;
   align-items: center;
+  white-space: nowrap;
   height: var(--button-size);
+  font-size: 0.8rem;
+  @include responsive(xs) {
+    font-size: 1rem;
+  }
 }
 
 .smallMenuEntry {
   display: flex;
   align-items: center;
-  margin-right: 1.5rem;
+  margin-left: 1.5rem;
+  &:first-child {
+    margin-left: 0;
+  }
 }
 
 .smallMenuLink {
   text-decoration: none;
   font-weight: 600;
   color: var(--color-text);
-  [data-mode='dark'] & {
-    color: var(--color-headline);
-  }
-  &.active {
-    color: var(--color-logo);
+  &[data-active] {
+    [data-mode='light'] & {
+      color: #318513;
+    }
+    [data-mode='dark'] & {
+      color: #f4ceff;
+    }
   }
 }
 
@@ -88,8 +100,13 @@
   text-decoration: none;
   margin-bottom: 1rem;
   color: var(--color-text);
-  &.active {
-    color: var(--color-logo);
+  &[data-active] {
+    [data-mode='light'] & {
+      color: #318513;
+    }
+    [data-mode='dark'] & {
+      color: #f4ceff;
+    }
   }
   display: block;
   font-size: var(--h1-size);

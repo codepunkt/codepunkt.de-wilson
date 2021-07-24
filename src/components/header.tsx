@@ -7,7 +7,7 @@ const Header: FunctionalComponent = () => {
   return (
     <header class={classes.header}>
       <a href="/" class={classes.logoLink}>
-        <Logo class={classes.logo} />
+        <Logo class={classes.logo} data-logo />
       </a>
       <Menu />
     </header>

@@ -5,6 +5,7 @@ import useMedia from '../hooks/use-media'
 import MenuToggle from './menu-toggle'
 import ModeToggle from './mode-toggle'
 import classes from './menu.module.scss'
+import { useLocation } from 'preact-iso'
 
 /**
  * @TODO activeClassName on links
@@ -63,6 +64,7 @@ const Menu: FunctionalComponent = () => {
   const wasOpen = usePrevious(isOpen)
   const isWide = useMedia({ minWidth: '1024px' }, true)
   const wasWide = usePrevious(isWide)
+  const currentUrl = useLocation().url
 
   // when screen gets wide, hide menu
   useEffect(() => {
@@ -87,65 +89,70 @@ const Menu: FunctionalComponent = () => {
 
   return (
     <div class={classes.wrapper}>
-      {isWide && (
-        <ol class={classes.smallMenu}>
-          {MENU_ENTRIES.map(({ url, name }) => (
-            <li key={name} class={classes.smallMenuEntry}>
-              <a href={url} class={classes.smallMenuLink}>
-                {name}
-              </a>
-            </li>
-          ))}
-        </ol>
-      )}
+      <ol class={classes.smallMenu}>
+        {MENU_ENTRIES.map(({ url, name }) => (
+          <li key={name} class={classes.smallMenuEntry}>
+            <a
+              href={url}
+              class={classes.smallMenuLink}
+              data-active={
+                url === '/' ? currentUrl === url : currentUrl.startsWith(url)
+              }
+            >
+              {name}
+            </a>
+          </li>
+        ))}
+      </ol>
       <ModeToggle />
-      {!isWide && (
+      <MenuToggle isOpen={isOpen} setIsOpen={setIsOpen} />
+      {isOpen && (
         <>
-          <MenuToggle isOpen={isOpen} setIsOpen={setIsOpen} />
-          {isOpen && (
-            <>
-              <div class={classes.background} />
-              <nav class={classes.nav}>
-                <div class={classes.content}>
-                  <ol class={classes.menu}>
-                    {MENU_ENTRIES.map(({ url, name }) => (
-                      <li key={name}>
-                        <a
-                          href={url}
-                          onClick={closeMenu}
-                          class={classes.menuLink}
-                        >
-                          {name}
+          <div class={classes.background} />
+          <nav class={classes.nav}>
+            <div class={classes.content}>
+              <ol class={classes.menu}>
+                {MENU_ENTRIES.map(({ url, name }) => (
+                  <li key={name}>
+                    <a
+                      href={url}
+                      onClick={closeMenu}
+                      class={classes.menuLink}
+                      data-active={
+                        url === '/'
+                          ? currentUrl === url
+                          : currentUrl.startsWith(url)
+                      }
+                    >
+                      {name}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+              <footer class={classes.menuFooter}>
+                <ol class={classes.menuSocial}>
+                  {SOCIAL_LINKS.map(({ url, name, path, color }) => {
+                    return (
+                      <li key={url}>
+                        <a href={url} aria-label={name}>
+                          <svg
+                            role="img"
+                            viewBox="0 0 512 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                            aria-labelledby={`social-icon-${name}`}
+                            class={classes.socialIcon}
+                          >
+                            <title id={`social-icon-${name}`}>{name}</title>
+                            <path d={path} fill={color} />
+                          </svg>
                         </a>
                       </li>
-                    ))}
-                  </ol>
-                  <footer class={classes.menuFooter}>
-                    <ol class={classes.menuSocial}>
-                      {SOCIAL_LINKS.map(({ url, name, path, color }) => {
-                        return (
-                          <li key={url}>
-                            <a href={url} aria-label={name}>
-                              <svg
-                                role="img"
-                                viewBox="0 0 512 512"
-                                xmlns="http://www.w3.org/2000/svg"
-                                aria-labelledby={`social-icon-${name}`}
-                                class={classes.socialIcon}
-                              >
-                                <title id={`social-icon-${name}`}>{name}</title>
-                                <path d={path} fill={color} />
-                              </svg>
-                            </a>
-                          </li>
-                        )
-                      })}
-                    </ol>
-                  </footer>
-                </div>
-              </nav>
-            </>
-          )}
+                    )
+                  })}
+                </ol>
+              </footer>
+            </div>
+          </nav>
         </>
       )}
     </div>

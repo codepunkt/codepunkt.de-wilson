@@ -2,6 +2,15 @@ const Terser = require('terser')
 const colors = require('./src/colors.json')
 
 const setCssVariables = () => {
+  document.querySelector('style[data-inject-head]').textContent += [
+    // show logo wordmark
+    'svg[data-logo]{margin-right:0;}svg[data-logo]>.wordmark{display:inline;}',
+    // show color mode toggle
+    'button[aria-label="Dark mode"]{display:flex;}',
+    // show toggle menu on small screen
+    '@media(max-width:1023px){button[aria-label=Menu]{display:flex;}ol[class*=smallMenu]{display:none;}}',
+  ].join('')
+
   const preferDarkQuery = '(prefers-color-scheme: dark)'
   const mediaQueryList = window.matchMedia(preferDarkQuery)
   const supportsColorSchemeQuery = mediaQueryList.media === preferDarkQuery
@@ -19,13 +28,29 @@ const setCssVariables = () => {
   root.style.setProperty('--initial-color-mode', colorMode)
   root.setAttribute('data-mode', colorMode)
 
-  Object.entries(window.__CODEPUNKT__.colors).forEach(
-    ([name, colorByTheme]) => {
-      const cssVarName = `--color-${name}`
-      root.style.setProperty(cssVarName, colorByTheme[colorMode])
-    }
-  )
+  Object.entries(colors).forEach(([name, colorByTheme]) => {
+    const cssVarName = `--color-${name}`
+    root.style.setProperty(cssVarName, colorByTheme[colorMode])
+  })
 }
+
+const manualStyles = ['light', 'dark']
+  .map(
+    (mode) =>
+      `:root[data-mode=${mode}]{${Object.entries(colors)
+        .map(([name, colors]) => `--color-${name}:${colors[mode]};`)
+        .join('')}}`
+  )
+  .join('')
+
+const mediaQueryStyles = ['light', 'dark']
+  .map(
+    (mode) =>
+      `@media (prefers-color-scheme:${mode}){:root{${Object.entries(colors)
+        .map(([name, colors]) => `--color-${name}:${colors[mode]};`)
+        .join('')}}}`
+  )
+  .join('')
 
 /**
  * @type { import('wilson').SiteConfig }
@@ -40,21 +65,15 @@ module.exports = {
     lang: 'en',
   },
   injectHead: async () => {
-    return `<script>
-      window.__CODEPUNKT__={colors:${JSON.stringify(colors)}};
+    return `<style data-inject-head>
+      ${mediaQueryStyles}
+      ${manualStyles}
+    </style>
+    <script>
       ${(await Terser.minify(`(${String(setCssVariables)})()`)).code};
-    </script>
-    <style>${['light', 'dark']
-      .map(
-        (mode) =>
-          `:root[data-mode=${mode}]{${Object.entries(colors)
-            .map(
-              ([name, colors]) => `--color-${name}:${colors[mode]}!important;`
-            )
-            .join('')}}`
-      )
-      .join('')}</style>`
+    </script>`
   },
+
   pageLayouts: [
     { pattern: 'writing/**/*', layout: 'blog' },
     { pattern: '**', layout: 'default' },

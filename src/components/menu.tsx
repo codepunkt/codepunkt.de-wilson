@@ -1,10 +1,10 @@
 import { FunctionalComponent } from 'preact'
 import { useEffect, useState } from 'preact/hooks'
-import usePrevious from '../hooks/use-previous'
-import useMedia from '../hooks/use-media'
+import usePrevious from '@react-hook/previous'
+import { useMediaQuery } from '@react-hook/media-query'
 import MenuToggle from './menu-toggle'
 import ModeToggle from './mode-toggle'
-import classes from './menu.module.scss'
+import styles from './menu.module.scss'
 import { useLocation } from 'preact-iso'
 
 /**
@@ -62,7 +62,7 @@ const MENU_ENTRIES = [
 const Menu: FunctionalComponent = () => {
   const [isOpen, setIsOpen] = useState(false)
   const wasOpen = usePrevious(isOpen)
-  const isWide = useMedia({ minWidth: '1024px' }, true)
+  const isWide = useMediaQuery('(min-width: 1024px)')
   const wasWide = usePrevious(isWide)
   const currentUrl = useLocation().url
 
@@ -88,13 +88,13 @@ const Menu: FunctionalComponent = () => {
   }
 
   return (
-    <div class={classes.wrapper}>
-      <ol class={classes.smallMenu}>
+    <div class={styles.wrapper}>
+      <ol class={styles.smallMenu}>
         {MENU_ENTRIES.map(({ url, name }) => (
-          <li key={name} class={classes.smallMenuEntry}>
+          <li key={name} class={styles.smallMenuEntry}>
             <a
               href={url}
-              class={classes.smallMenuLink}
+              class={styles.smallMenuLink}
               data-active={
                 url === '/' ? currentUrl === url : currentUrl.startsWith(url)
               }
@@ -108,16 +108,16 @@ const Menu: FunctionalComponent = () => {
       <MenuToggle isOpen={isOpen} setIsOpen={setIsOpen} />
       {isOpen && (
         <>
-          <div class={classes.background} />
-          <nav class={classes.nav}>
-            <div class={classes.content}>
-              <ol class={classes.menu}>
+          <div class={styles.background} />
+          <nav class={styles.nav}>
+            <div class={styles.content}>
+              <ol class={styles.menu}>
                 {MENU_ENTRIES.map(({ url, name }) => (
                   <li key={name}>
                     <a
                       href={url}
                       onClick={closeMenu}
-                      class={classes.menuLink}
+                      class={styles.menuLink}
                       data-active={
                         url === '/'
                           ? currentUrl === url
@@ -129,8 +129,8 @@ const Menu: FunctionalComponent = () => {
                   </li>
                 ))}
               </ol>
-              <footer class={classes.menuFooter}>
-                <ol class={classes.menuSocial}>
+              <footer class={styles.menuFooter}>
+                <ol class={styles.menuSocial}>
                   {SOCIAL_LINKS.map(({ url, name, path, color }) => {
                     return (
                       <li key={url}>
@@ -140,7 +140,7 @@ const Menu: FunctionalComponent = () => {
                             viewBox="0 0 512 512"
                             xmlns="http://www.w3.org/2000/svg"
                             aria-labelledby={`social-icon-${name}`}
-                            class={classes.socialIcon}
+                            class={styles.socialIcon}
                           >
                             <title id={`social-icon-${name}`}>{name}</title>
                             <path d={path} fill={color} />

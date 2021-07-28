@@ -1,6 +1,6 @@
 import { FunctionalComponent } from 'preact'
 import { StateUpdater } from 'preact/hooks'
-import classes from './menu-toggle.module.scss'
+import styles from './menu-toggle.module.scss'
 
 const MenuToggleButton: FunctionalComponent<{
   isOpen: boolean
@@ -8,7 +8,7 @@ const MenuToggleButton: FunctionalComponent<{
 }> = ({ isOpen, setIsOpen }) => {
   return (
     <button
-      class={classes.button}
+      class={styles.button}
       aria-label="Menu"
       aria-pressed={isOpen}
       onClick={() => {
@@ -16,8 +16,8 @@ const MenuToggleButton: FunctionalComponent<{
         setIsOpen((isOpen) => !isOpen)
       }}
     >
-      <div data-open={isOpen} class={classes.buns}>
-        <span data-open={isOpen} class={classes.patty} />
+      <div data-open={isOpen} class={styles.buns}>
+        <span data-open={isOpen} class={styles.patty} />
       </div>
     </button>
   )

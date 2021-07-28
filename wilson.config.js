@@ -15,26 +15,22 @@ const setCssVariables = () => {
   const mediaQueryList = window.matchMedia(preferDarkQuery)
   const supportsColorSchemeQuery = mediaQueryList.media === preferDarkQuery
 
-  const persistedColorMode = localStorage.getItem('color-mode')
-
-  let colorMode = 'light'
-  if (typeof persistedColorMode === 'string') {
-    colorMode = persistedColorMode
-  } else if (supportsColorSchemeQuery) {
-    colorMode = mediaQueryList.matches ? 'dark' : 'light'
-  }
-
-  let root = document.documentElement
-  root.style.setProperty('--initial-color-mode', colorMode)
-  root.setAttribute('data-mode', colorMode)
-
-  Object.entries(colors).forEach(([name, colorByTheme]) => {
-    const cssVarName = `--color-${name}`
-    root.style.setProperty(cssVarName, colorByTheme[colorMode])
-  })
+  document.documentElement.setAttribute(
+    'data-mode',
+    localStorage.getItem('color-mode') ??
+      (supportsColorSchemeQuery
+        ? mediaQueryList.matches
+          ? 'dark'
+          : 'light'
+        : 'light')
+  )
 }
 
-const manualStyles = ['light', 'dark']
+const defaultStyles = `:root{${Object.entries(colors)
+  .map(([name, colors]) => `--color-${name}:${colors['light']};`)
+  .join('')}}`
+
+const toggleStyles = ['light', 'dark']
   .map(
     (mode) =>
       `:root[data-mode=${mode}]{${Object.entries(colors)
@@ -46,7 +42,7 @@ const manualStyles = ['light', 'dark']
 const mediaQueryStyles = ['light', 'dark']
   .map(
     (mode) =>
-      `@media (prefers-color-scheme:${mode}){:root{${Object.entries(colors)
+      `@media(prefers-color-scheme:${mode}){:root{${Object.entries(colors)
         .map(([name, colors]) => `--color-${name}:${colors[mode]};`)
         .join('')}}}`
   )
@@ -66,18 +62,24 @@ module.exports = {
   },
   injectHead: async () => {
     return `<style data-inject-head>
+      ${defaultStyles}
       ${mediaQueryStyles}
-      ${manualStyles}
+      ${toggleStyles}
     </style>
     <script>
       ${(await Terser.minify(`(${String(setCssVariables)})()`)).code};
     </script>`
   },
-
-  pageLayouts: [
-    { pattern: 'writing/**/*', layout: 'blog' },
-    { pattern: '**', layout: 'default' },
-  ],
+  layouts: {
+    nestedLayouts: [{ pattern: 'writing/**/*', layout: 'blog' }],
+  },
+  performance: {
+    linkPreloadTest: (arg) => {
+      console.log(arg)
+      return arg === '/writing/' || arg === '/about/'
+    },
+  },
+  pageLayouts: [{ pattern: 'writing/**/*', layout: 'blog' }],
   opengraphImage: {
     background: require.resolve('./src/assets/og-image-background.png'),
     texts: [

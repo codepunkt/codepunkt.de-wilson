@@ -10,14 +10,15 @@ export type State = {
 
 export const ColorModeContext = createContext<State>(null)
 
+/**
+ * @TODO with js enabled, navigate in dark mode. toggle resets to light mode
+ */
 const ColorModeProvider: FunctionalComponent = ({ children }) => {
   const [colorMode, rawSetColorMode] = useState<ColorMode>(undefined)
 
   useEffect(() => {
     rawSetColorMode(
-      document.documentElement.style.getPropertyValue(
-        '--initial-color-mode'
-      ) as ColorMode
+      document.documentElement.getAttribute('data-mode') as ColorMode
     )
   }, [])
 

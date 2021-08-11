@@ -6,7 +6,7 @@ description: The term "vanilla JavaScript" has caused some confusion amongst beg
 taxonomies:
   categories:
     - writing
-  tags:
+  topics:
     - JavaScript
     - Glossary
 ---

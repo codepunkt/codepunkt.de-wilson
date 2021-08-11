@@ -6,7 +6,7 @@ description: This article introduces you to my latest side project and describes
 taxonomies:
   categories:
     - writing
-  tags:
+  topics:
     - JavaScript
     - TypeScript
 ---

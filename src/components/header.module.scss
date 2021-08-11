@@ -35,9 +35,15 @@
   [class~='logomark'] {
     path:nth-child(1) {
       fill: #9cc888;
+      [data-mode='dark'] & {
+        fill: #523571;
+      }
     }
     path:nth-child(2) {
       fill: #338640;
+      [data-mode='dark'] & {
+        fill: #8657b7;
+      }
     }
   }
 }

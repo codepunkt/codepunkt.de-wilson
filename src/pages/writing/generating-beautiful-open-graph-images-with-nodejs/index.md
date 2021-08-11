@@ -6,7 +6,7 @@ description: Open graph images provide nice previews when sharing your website. 
 taxonomies:
   categories:
     - writing
-  tags:
+  topics:
     - JavaScript
     - Node.js
     - Open Graph

@@ -32,8 +32,6 @@ const useOffset = () => {
   const { inferred } = useDeviceOrientation()
   const { beta, gamma } = inferred
 
-  console.log(mx, my)
-
   // calculate new offset and push it to offset history whenver one of the
   // dependencies change
   useEffect(() => {
@@ -92,6 +90,14 @@ const useOffset = () => {
 
     setIsDizzy(offsetDistance > DIZZY_CALCULATION_THRESHOLD)
   }, [offsets])
+
+  useEffect(() => {
+    if (isDizzy) {
+      setTimeout(() => {
+        setIsDizzy(false)
+      }, 4500)
+    }
+  }, [isDizzy])
 
   return { ref, isDizzy, ...(offsets[0] ?? { x: 0, y: 0 }) }
 }

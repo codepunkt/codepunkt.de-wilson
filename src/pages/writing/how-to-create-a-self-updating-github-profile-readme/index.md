@@ -6,7 +6,7 @@ description: Profile READMEs are a new GitHub feature that allows user-defined c
 taxonomies:
   categories:
     - writing
-  tags:
+  topics:
     - GitHub
     - Markdown
     - Unified

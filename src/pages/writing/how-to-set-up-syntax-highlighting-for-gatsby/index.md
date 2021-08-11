@@ -6,7 +6,7 @@ description: We're analyzing the benefits of build-time solutions compared to ru
 taxonomies:
   categories:
     - writing
-  tags:
+  topics:
     - JavaScript
     - JAMstack
     - CodeSnippets
@@ -31,7 +31,7 @@ The most commonly used library to perform syntax highlighting at build time with
 
 JavaScript code highlighted with it and the _"okaidia"_ theme for the dark mode of this site looks like this:
 
-![Screenshot of JavaScript code highlighted with gatsby-remark-prismjs](gatsby-remark-prismjs-screenshot.png)
+![Screenshot of JavaScript code highlighted with gatsby-remark-prismjs](./gatsby-remark-prismjs-screenshot.png)
 
 It works fine and performs great because the highlighting is done at build time. However, you can see a few quirks in the example:
 

@@ -79,7 +79,11 @@ module.exports = {
       return arg === '/writing/' || arg === '/about/'
     },
   },
-  pageLayouts: [{ pattern: 'writing/**/*', layout: 'blog' }],
+  pagination: { pageSize: 3 },
+  taxonomies: {
+    categories: 'category',
+    topics: 'topic',
+  },
   opengraphImage: {
     background: require.resolve('./src/assets/og-image-background.png'),
     texts: [

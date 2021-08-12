@@ -4,9 +4,15 @@ import styles from './index.module.scss'
 import useOffset from '../hooks/use-offset'
 import anime from 'animejs'
 import { useEffect } from 'preact/hooks'
+import { useMediaQuery } from '@react-hook/media-query'
+import {
+  LineAnimationNarrow,
+  LineAnimationWide,
+} from '../components/line-animation'
 
 export const Page: FunctionalComponent<ContentPageProps> = ({ title }) => {
   const { x, y, ref, isDizzy } = useOffset()
+  const isWide = useMediaQuery('(min-width: 1024px)')
 
   useEffect(() => {
     const baseSettings = {
@@ -73,7 +79,6 @@ export const Page: FunctionalComponent<ContentPageProps> = ({ title }) => {
 
   return (
     <article class={styles.article}>
-      {title}
       <section class={styles.avatarSection}>
         <div class={styles.avatarStage}>
           <div
@@ -380,7 +385,13 @@ export const Page: FunctionalComponent<ContentPageProps> = ({ title }) => {
           </p>
         </div>
       </section>
-      <section>svg animations</section>
+      <section>
+        {isWide ? <LineAnimationWide /> : <LineAnimationNarrow />}
+      </section>
     </article>
   )
+}
+
+export const frontmatter = {
+  title: 'Home',
 }

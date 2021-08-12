@@ -1,0 +1,249 @@
+@import '../assets/mixins.scss';
+
+.section {
+  position: relative;
+  overflow: hidden;
+  margin: 0 calc(-1 * var(--content-padding)) 60px;
+}
+
+.svg {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  use,
+  path {
+    fill: none;
+  }
+  path.pencil {
+    stroke: var(--color-text);
+    stroke-width: 2 !important;
+  }
+  path:not(.dot, .line, .pencil) {
+    stroke: none;
+  }
+  path.dot {
+    stroke: var(--color-indicator);
+    stroke-dasharray: 1, 1e6;
+    stroke-miterlimit: 10;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  /* light mode */
+  path.line {
+    stroke: #7c8c80;
+    stroke-dashoffset: 0;
+    stroke-width: 1;
+    stroke-miterlimit: 10;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  path.linePath {
+    stroke-dasharray: 1, 1e6;
+    stroke-miterlimit: 10;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  path.water {
+    fill: #dff2ff;
+  }
+  path.land {
+    fill: #ccf3d7;
+  }
+  path.puzzle {
+    fill: #d1adad;
+  }
+  path.skin {
+    fill: #edd8cc;
+  }
+  path.beard {
+    fill: #a87858;
+  }
+  path.bulb {
+    fill: #ffe08a;
+  }
+  path.case {
+    fill: #e0e0e0;
+  }
+  path.monitor {
+    fill: #bbc6d7;
+  }
+  path.keyboard {
+    fill: #3d3b3b;
+  }
+  path.trackpad {
+    fill: #bcbbbb;
+  }
+  path.jeans {
+    fill: #97bfce;
+  }
+  path.hat {
+    fill: #3c3d3f;
+  }
+  path.board {
+    fill: #fff;
+  }
+  path.shirt {
+    fill: #aaa;
+  }
+  path.paperplane {
+    fill: #ffe08a;
+  }
+  /* dark mode */
+  [data-mode='dark'] & {
+    path.line {
+      stroke: #8aa9c8;
+    }
+    path.water {
+      fill: #23485b;
+    }
+    path.land {
+      fill: #005f2b;
+    }
+    path.puzzle {
+      fill: #7d5252;
+    }
+    path.skin {
+      fill: #d6beb2;
+    }
+    path.beard {
+      fill: #a87858;
+    }
+    path.bulb {
+      fill: #ffc72e;
+    }
+    path.case {
+      fill: #e0e0e0;
+    }
+    path.monitor {
+      fill: #bbc6d7;
+    }
+    path.keyboard {
+      fill: #3d3b3b;
+    }
+    path.trackpad {
+      fill: #bcbbbb;
+    }
+    path.jeans {
+      fill: #97bfce;
+    }
+    path.hat {
+      fill: #3c3d3f;
+    }
+    path.board {
+      fill: #3e4156;
+    }
+    path.shirt {
+      fill: #aaa;
+    }
+    path.paperplane {
+      fill: #7285b2;
+    }
+  }
+}
+
+.articles {
+  article {
+    max-width: 80%;
+    margin: 0;
+    font-size: 1.2rem;
+    position: absolute;
+    line-height: 1.72;
+    width: 500px;
+    transform: translateX(-50%);
+    left: 50%;
+    /* horizontal center on narrow screen */
+    // @media (max-width: ${BREAKPOINTS[2] - 1}px) {
+    // }
+    /* center text on narrow screen, alternate left/right on wide */
+    text-align: center;
+    @include responsive(md) {
+      left: auto;
+      &:nth-child(odd) {
+        text-align: left;
+      }
+      &:nth-child(even) {
+        text-align: right;
+      }
+    }
+  }
+  article:nth-child(1) {
+    top: 340px;
+    @include responsive(md) {
+      width: 400px;
+      left: 74%;
+      top: 195px;
+    }
+    @include responsive(lg) {
+      width: 500px;
+    }
+  }
+  article:nth-child(2) {
+    top: 900px;
+    @include responsive(md) {
+      top: 875px;
+      left: 28%;
+      width: 450px;
+    }
+    @include responsive(lg) {
+      width: 500px;
+    }
+  }
+  article:nth-child(3) {
+    top: 1470px;
+    @include responsive(md) {
+      left: 62%;
+      top: 1625px;
+    }
+  }
+  article:nth-child(4) {
+    top: 2020px;
+    @include responsive(md) {
+      width: 360px;
+      top: 2310px;
+      left: 24%;
+    }
+    @include responsive(lg) {
+      width: 460px;
+    }
+  }
+  article:nth-child(5) {
+    top: 2685px;
+    @include responsive(md) {
+      width: 380px;
+      top: 3020px;
+      left: 72%;
+    }
+    @include responsive(lg) {
+      width: 500px;
+    }
+  }
+  article:nth-child(6) {
+    top: 3290px;
+    @include responsive(md) {
+      top: 3700px;
+      left: 33%;
+    }
+  }
+}
+
+.narrowAnimationSection {
+  height: 3560px;
+  margin-bottom: 0;
+}
+
+.narrowAnimationSvg {
+  width: 800px;
+}
+
+.wideAnimationSection {
+  height: 4080px;
+  @include responsive(lg) {
+    margin-top: 60px;
+  }
+}
+
+.wideAnimationSvg {
+  width: 1120px;
+}

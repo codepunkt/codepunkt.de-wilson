@@ -5,7 +5,7 @@ import { formatPostDate } from '../utils/date'
 
 export const Page: FunctionalComponent<SelectPageProps> = (props) => {
   const { title, pagination, contentPages } = props
-  console.log(props)
+
   return (
     <div class={styles.wrapper}>
       <h1>{title}</h1>

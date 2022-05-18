@@ -5,7 +5,6 @@ import { formatPostDate } from '../utils/date'
 const BlogLayout: FunctionalComponent<LayoutProps> = (props) => {
   const { children, date, frontmatter, title } = props
 
-  console.log(props)
   return (
     <>
       <time dateTime={date}>{formatPostDate(date)}</time>

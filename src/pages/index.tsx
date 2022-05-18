@@ -51,7 +51,7 @@ export const Page: FunctionalComponent<ContentPageProps> = ({ title }) => {
 
   const inlineStyles = {
     eyeFollow: {
-      transition: 'transform 200ms linear',
+      transition: 'transform 100ms linear',
       transform: `translate(${isDizzy ? 0 : x * (x > 0 ? 8 : 15)}px, ${
         isDizzy ? 0 : y * (y < 0 ? 4 : 7)
       }px)`,
@@ -64,13 +64,13 @@ export const Page: FunctionalComponent<ContentPageProps> = ({ title }) => {
       }px) rotate(${isDizzy ? 0 : x * y * (x < 0 && y < 0 ? 6 : 4)}deg)`,
     },
     leftBrowFollow: {
-      transition: 'transform 300ms ease-in-out',
+      transition: 'transform 100ms ease-in-out',
       transform: `translate(0px, ${
         isDizzy ? 0 : y * 3.5 + (x < 0 ? 3 : -5)
       }px)`,
     },
     rightBrowFollow: {
-      transition: 'transform 300ms ease-in-out',
+      transition: 'transform 100ms ease-in-out',
       transform: `translate(0px, ${
         isDizzy ? 0 : y * 3.5 + (x > 0 ? 3 : -5)
       }px)`,

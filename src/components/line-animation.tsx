@@ -3,11 +3,27 @@ import { memo } from 'preact/compat'
 
 import styles from './line-animation.module.scss'
 import useScrollYProgress from '../hooks/use-scroll-y-progress'
+import { head } from 'lodash'
 
 interface Drawing<T extends string> {
   opacity: number[][]
   paths: Record<T, string>
 }
+
+type LaptopPaths = 'case' | 'monitor' | 'keyboard' | 'trackpad'
+type IdeaPaths = 'skin' | 'beard' | 'bulb'
+type WorldPaths = 'water' | 'land' | 'island1' | 'island2'
+type TeamworkPaths = 'rightPiece' | 'leftPiece' | 'rightHand' | 'leftHand'
+type WorkshopPaths =
+  | 'board'
+  | 'shirt'
+  | 'jeans'
+  | 'leftArm'
+  | 'rightArm'
+  | 'head'
+  | 'beard'
+  | 'hat'
+type ContactPaths = 'paperplane'
 
 interface LineAnimationProps {
   linePath: string
@@ -18,21 +34,12 @@ interface LineAnimationProps {
   svgStyles: string
   paragraphStarts: number[]
   dotSize: number[][]
-  laptop: Drawing<'case' | 'monitor' | 'keyboard' | 'trackpad'>
-  idea: Drawing<'skin' | 'beard' | 'bulb'>
-  world: Drawing<'water' | 'land' | 'island1' | 'island2'>
-  teamwork: Drawing<'rightPiece' | 'leftPiece' | 'rightHand' | 'leftHand'>
-  workshop: Drawing<
-    | 'board'
-    | 'shirt'
-    | 'jeans'
-    | 'leftArm'
-    | 'rightArm'
-    | 'head'
-    | 'beard'
-    | 'hat'
-  >
-  contact: Drawing<'paperplane'>
+  laptop: Drawing<LaptopPaths>
+  idea: Drawing<IdeaPaths>
+  world: Drawing<WorldPaths>
+  teamwork: Drawing<TeamworkPaths>
+  workshop: Drawing<WorkshopPaths>
+  contact: Drawing<ContactPaths>
 }
 
 const map = (
@@ -44,26 +51,20 @@ const map = (
 }
 
 const mapRange = (value: number, from: number[], to: number[]) => {
-  if (from.length !== to.length) {
-    throw new Error('from length is not equal to to length')
-  }
-  from.forEach((inValue) => {
-    if (inValue > 1) {
-      throw new Error(`from has a value greater than 1: ${inValue}`)
-    }
-  })
+  // security checks, disabled to improve performance
+  // if (from.length !== to.length) {
+  //   throw new Error('from length is not equal to to length')
+  // }
+  // from.forEach((inValue) => {
+  //   if (inValue > 1) {
+  //     throw new Error(`from has a value greater than 1: ${inValue}`)
+  //   }
+  // })
 
-  if (value >= 1) {
-    return to[to.length - 1]
-  }
-
+  if (value >= 1) return to[to.length - 1]
   const idx = from.findIndex((inValue) => inValue > value)
   const index = Math.max(0, (idx === -1 ? from.length : idx) - 1)
-  const x1 = from[index]
-  const y1 = from[index + 1]
-  const x2 = to[index]
-  const y2 = to[index + 1]
-  return map(value, [x1, y1], [x2, y2])
+  return map(value, [from[index], from[index + 1]], [to[index], to[index + 1]])
 }
 
 interface ArticleProps {
@@ -71,6 +72,28 @@ interface ArticleProps {
   scrollPosition: number
   startAnimation: number
 }
+
+const ArticleHeadline: FunctionalComponent<{
+  opacity: number
+  marginTop: number
+}> = memo(
+  ({ children, marginTop, opacity }) => (
+    <h2 style={{ opacity, marginTop }}>{children}</h2>
+  ),
+  (prev, next) =>
+    prev.opacity === next.opacity && prev.marginTop === next.marginTop
+)
+
+const ArticleParagraph: FunctionalComponent<{
+  opacity: number
+  marginTop: number
+}> = memo(
+  ({ children, marginTop, opacity }) => (
+    <p style={{ opacity, marginTop }}>{children}</p>
+  ),
+  (prev, next) =>
+    prev.opacity === next.opacity && prev.marginTop === next.marginTop
+)
 
 const Article: FunctionalComponent<ArticleProps> = ({
   headline,
@@ -93,15 +116,108 @@ const Article: FunctionalComponent<ArticleProps> = ({
 
   return (
     <article>
-      <h2 style={{ opacity: headlineOpacity, marginTop: headlineMarginTop }}>
+      <ArticleHeadline opacity={headlineOpacity} marginTop={headlineMarginTop}>
         {headline}
-      </h2>
-      <p style={{ opacity: paragraphOpacity, marginTop: paragraphMarginTop }}>
+      </ArticleHeadline>
+      <ArticleParagraph
+        opacity={paragraphOpacity}
+        marginTop={paragraphMarginTop}
+      >
         {children}
-      </p>
+      </ArticleParagraph>
     </article>
   )
 }
+
+const Laptop: FunctionalComponent<{
+  opacity: number
+  paths: Record<LaptopPaths, string>
+}> = memo(
+  ({ opacity, paths }) => (
+    <g style={{ opacity }}>
+      <path class={styles.case} d={paths.case} />
+      <path class={styles.monitor} d={paths.monitor} />
+      <path class={styles.keyboard} d={paths.keyboard} />
+      <path class={styles.trackpad} d={paths.trackpad} />
+    </g>
+  ),
+  (prev, next) => prev.opacity === next.opacity
+)
+
+const Idea: FunctionalComponent<{
+  opacity: number
+  paths: Record<IdeaPaths, string>
+}> = memo(
+  ({ opacity, paths }) => (
+    <g style={{ opacity }}>
+      <path class={styles.skin} d={paths.skin} />
+      <path class={styles.beard} d={paths.beard} />
+      <path class={styles.bulb} d={paths.bulb} />
+    </g>
+  ),
+  (prev, next) => prev.opacity === next.opacity
+)
+
+const World: FunctionalComponent<{
+  opacity: number
+  paths: Record<WorldPaths, string>
+}> = memo(
+  ({ opacity, paths }) => (
+    <g style={{ opacity }}>
+      <path class={styles.water} d={paths.water} />
+      <path class={styles.land} d={paths.land} />
+      <path class={styles.land} d={paths.island1} />
+      <path class={styles.land} d={paths.island2} />
+    </g>
+  ),
+  (prev, next) => prev.opacity === next.opacity
+)
+
+const Teamwork: FunctionalComponent<{
+  opacity: number
+  paths: Record<TeamworkPaths, string>
+}> = memo(
+  ({ opacity, paths }) => (
+    <g style={{ opacity }}>
+      <path class={styles.puzzle} d={paths.rightPiece} />
+      <path class={styles.puzzle} d={paths.leftPiece} />
+      <path class={styles.skin} d={paths.rightHand} />
+      <path class={styles.skin} d={paths.leftHand} />
+    </g>
+  ),
+  (prev, next) => prev.opacity === next.opacity
+)
+
+const Workshop: FunctionalComponent<{
+  opacity: number
+  paths: Record<WorkshopPaths, string>
+}> = memo(
+  ({ opacity, paths }) => (
+    <g style={{ opacity }}>
+      <path class={styles.board} d={paths.board} />
+      <path class={styles.shirt} d={paths.shirt} />
+      <path class={styles.skin} d={paths.leftArm} />
+      <path class={styles.jeans} d={paths.jeans} />
+      <path class={styles.skin} d={paths.rightArm} />
+      <path class={styles.skin} d={paths.head} />
+      <path class={styles.beard} d={paths.beard} />
+      <path class={styles.hat} d={paths.hat} />
+    </g>
+  ),
+  (prev, next) => prev.opacity === next.opacity
+)
+
+const Contact: FunctionalComponent<{
+  opacity: number
+  paths: Record<ContactPaths, string>
+}> = memo(
+  ({ opacity, paths }) => (
+    <g style={{ opacity }}>
+      <path class={styles.paperplane} d={paths.paperplane} />
+    </g>
+  ),
+  (prev, next) => prev.opacity === next.opacity
+)
 
 const LineAnimation: FunctionalComponent<LineAnimationProps> = ({
   linePath,
@@ -119,7 +235,7 @@ const LineAnimation: FunctionalComponent<LineAnimationProps> = ({
   workshop,
   contact,
 }) => {
-  const { scrollYProgress } = useScrollYProgress()
+  const { scrollYProgress } = useScrollYProgress(30)
 
   // map viewport scroll to svg scroll
   const scroll = mapRange(scrollYProgress, [0, 1], [0, 1.08])
@@ -157,42 +273,12 @@ const LineAnimation: FunctionalComponent<LineAnimationProps> = ({
         preserveAspectRatio="xMidYMid slice"
         class={`${styles.svg} ${svgStyles}`}
       >
-        <g style={{ opacity: laptopOpacity }}>
-          <path class={styles.case} d={laptop.paths.case} />
-          <path class={styles.monitor} d={laptop.paths.monitor} />
-          <path class={styles.keyboard} d={laptop.paths.keyboard} />
-          <path class={styles.trackpad} d={laptop.paths.trackpad} />
-        </g>
-        <g style={{ opacity: ideaOpacity }}>
-          <path class={styles.skin} d={idea.paths.skin} />
-          <path class={styles.beard} d={idea.paths.beard} />
-          <path class={styles.bulb} d={idea.paths.bulb} />
-        </g>
-        <g style={{ opacity: worldOpacity }}>
-          <path class={styles.water} d={world.paths.water} />
-          <path class={styles.land} d={world.paths.land} />
-          <path class={styles.land} d={world.paths.island1} />
-          <path class={styles.land} d={world.paths.island2} />
-        </g>
-        <g style={{ opacity: teamworkOpacity }}>
-          <path class={styles.puzzle} d={teamwork.paths.rightPiece} />
-          <path class={styles.puzzle} d={teamwork.paths.leftPiece} />
-          <path class={styles.skin} d={teamwork.paths.rightHand} />
-          <path class={styles.skin} d={teamwork.paths.leftHand} />
-        </g>
-        <g style={{ opacity: workshopOpacity }}>
-          <path class={styles.board} d={workshop.paths.board} />
-          <path class={styles.shirt} d={workshop.paths.shirt} />
-          <path class={styles.skin} d={workshop.paths.leftArm} />
-          <path class={styles.jeans} d={workshop.paths.jeans} />
-          <path class={styles.skin} d={workshop.paths.rightArm} />
-          <path class={styles.skin} d={workshop.paths.head} />
-          <path class={styles.beard} d={workshop.paths.beard} />
-          <path class={styles.hat} d={workshop.paths.hat} />
-        </g>
-        <g style={{ opacity: contactOpacity }}>
-          <path class={styles.paperplane} d={contact.paths.paperplane} />
-        </g>
+        <Laptop opacity={laptopOpacity} paths={laptop.paths} />
+        <Idea opacity={ideaOpacity} paths={idea.paths} />
+        <World opacity={worldOpacity} paths={world.paths} />
+        <Teamwork opacity={teamworkOpacity} paths={teamwork.paths} />
+        <Workshop opacity={workshopOpacity} paths={workshop.paths} />
+        <Contact opacity={contactOpacity} paths={contact.paths} />
         <path
           d={linePath}
           class={styles.line}

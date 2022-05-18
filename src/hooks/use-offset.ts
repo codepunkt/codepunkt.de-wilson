@@ -2,7 +2,7 @@ import { useEffect, useState } from 'preact/hooks'
 import useDeviceOrientation from './use-device-orientation'
 import useElementCenter from './use-element-center'
 import { useWindowSize } from '@react-hook/window-size'
-import useMousePosition from '@react-hook/mouse-position'
+import useMousePosition from './use-mouse-position'
 
 const clamp = (num: number, [min, max]: [min: number, max: number]) =>
   Math.min(Math.max(num, min), max)
@@ -10,15 +10,6 @@ const clamp = (num: number, [min, max]: [min: number, max: number]) =>
 const DIZZY_CALCULATION_INTERVAL = 2500
 const DIZZY_CALCULATION_THRESHOLD = 15
 const POINTER_PRECEDENCE_THRESHOLD = 2000
-
-const useTimedMousePosition = () => {
-  const { x, y } = useMousePosition(document.documentElement)
-  const [state, set] = useState([x, y, Date.now()])
-  useEffect(() => {
-    set([x, y, Date.now()])
-  }, [x, y])
-  return state
-}
 
 type Offset = { x: number; y: number; timestamp: number }
 
@@ -28,7 +19,7 @@ const useOffset = () => {
   const [windowWidth, windowHeight] = useWindowSize({ wait: 100 })
   const initialValue = { x: windowWidth / 2, y: windowHeight / 2 }
   const { ref, x: cx, y: cy } = useElementCenter(initialValue)
-  const [mx, my, mouseTimestamp] = useTimedMousePosition()
+  const { x: mx, y: my, timestamp: mouseTimestamp } = useMousePosition()
   const { inferred } = useDeviceOrientation()
   const { beta, gamma } = inferred
 

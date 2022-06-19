@@ -27,16 +27,9 @@
 }
 
 .smallMenuLink {
-  text-decoration: none;
   font-weight: 600;
-  color: var(--color-text);
   &[data-active] {
-    [data-mode='light'] & {
-      color: #318513;
-    }
-    [data-mode='dark'] & {
-      color: #f4ceff;
-    }
+    color: var(--color-text);
   }
 }
 

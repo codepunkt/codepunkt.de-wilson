@@ -1,9 +1,10 @@
-import { FunctionalComponent } from 'preact'
+import { createRef, FunctionalComponent } from 'preact'
 import { memo } from 'preact/compat'
+import { useRef, useEffect } from 'preact/hooks'
 
 import styles from './line-animation.module.scss'
 import useScrollYProgress from '../hooks/use-scroll-y-progress'
-import { head } from 'lodash'
+import { useTranslation } from 'wilson'
 
 interface Drawing<T extends string> {
   opacity: number[][]
@@ -113,6 +114,10 @@ const Article: FunctionalComponent<ArticleProps> = ({
   )
   const headlineMarginTop = mapRange(headlineOpacity, [0, 1], [16, 0])
   const paragraphMarginTop = mapRange(paragraphOpacity, [0, 1], [16, 0])
+
+  if (headline === 'Learning and Teaching') {
+    console.log({ scrollPosition, headlineOpacity, paragraphOpacity })
+  }
 
   return (
     <article>
@@ -237,8 +242,19 @@ const LineAnimation: FunctionalComponent<LineAnimationProps> = ({
 }) => {
   const { scrollYProgress } = useScrollYProgress(30)
 
+  const ref = createRef<SVGSVGElement>()
+  useEffect(() => {
+    console.log('document.body.clientHeight', document.body.clientHeight)
+    if (ref.current) {
+      console.log('ref.current.clientHeight', ref.current.clientHeight)
+    }
+  }, [])
+
   // map viewport scroll to svg scroll
-  const scroll = mapRange(scrollYProgress, [0, 1], [0, 1.08])
+  const scroll = mapRange(scrollYProgress, [0, 1], [0, 1.1])
+  console.log(scrollYProgress, scroll)
+  // 1.22   5176 body      3616 svg
+  // 1.1    5713 body      4082 svg       23297 path
   const length = mapRange(scroll, lengthMapping[0], lengthMapping[1])
   const drawLength = `${length} 1e+6`
   const drawOffset = mapRange(scroll, speedMapping[0], speedMapping[1])
@@ -272,6 +288,7 @@ const LineAnimation: FunctionalComponent<LineAnimationProps> = ({
         viewBox={`0 0 1100 ${viewboxHeight}`}
         preserveAspectRatio="xMidYMid slice"
         class={`${styles.svg} ${svgStyles}`}
+        ref={ref}
       >
         <Laptop opacity={laptopOpacity} paths={laptop.paths} />
         <Idea opacity={ideaOpacity} paths={idea.paths} />
@@ -299,47 +316,44 @@ const LineAnimation: FunctionalComponent<LineAnimationProps> = ({
       </svg>
       <span class={styles.articles}>
         <Article
-          headline="Learning and Teaching"
+          headline={useTranslation('homepage-writing-headline')}
           scrollPosition={scroll}
           startAnimation={paragraphStarts[0]}
         >
-          In tech, you are never done learning. I write about what i've learned
-          on my <a href="/writing/">Blog</a> and on{' '}
-          <a
-            href="https://twitter.com/code_punkt"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Twitter
-          </a>
-          . Check it out, you might learn a thing or two!
+          <span
+            dangerouslySetInnerHTML={{
+              __html: useTranslation('homepage-writing-text'),
+            }}
+          />
         </Article>
         <Article
-          headline="What sparks my interest"
+          headline={useTranslation('homepage-interest-headline')}
           scrollPosition={scroll}
           startAnimation={paragraphStarts[1]}
         >
-          I'm curious, open-minded and love technology, UI and UX design and
-          video games. I believe in a culture that allows failure, supports
-          experiments and celebrates learnings.
+          {useTranslation('homepage-interest-text')}
         </Article>
         <Article
-          headline="All around the web"
+          headline={useTranslation('homepage-world-headline')}
           scrollPosition={scroll}
           startAnimation={paragraphStarts[2]}
         >
-          I've been building for the web since 1996 and left a footprint in
-          various industries. I live in Paderborn, Germany, where I organise the{' '}
-          <a href="https://paderbornjs.org/">Paderborn.js</a> Meetup.
+          <span
+            dangerouslySetInnerHTML={{
+              __html: useTranslation('homepage-world-text'),
+            }}
+          />
         </Article>
         <Article
-          headline="My day job"
+          headline={useTranslation('homepage-job-headline')}
           scrollPosition={scroll}
           startAnimation={paragraphStarts[3]}
         >
-          I'm a Software Architect at{' '}
-          <a href="https://www.dspace.com/">dSPACE</a>, where I support multiple
-          scrum teams with web technologies and cloud architecture.
+          <span
+            dangerouslySetInnerHTML={{
+              __html: useTranslation('homepage-job-text'),
+            }}
+          />
         </Article>
         <Article
           headline="Level up your team!"
@@ -351,16 +365,15 @@ const LineAnimation: FunctionalComponent<LineAnimationProps> = ({
           future-proof.
         </Article>
         <Article
-          headline="Contact me"
+          headline={useTranslation('homepage-contact-headline')}
           scrollPosition={scroll}
           startAnimation={paragraphStarts[5]}
         >
-          Want me to identify suitable technologies for your use-case?
-          Interested in exchanging ideas or talking about an article i wrote?
-          I’m always up for a chat.{' '}
-          <a href="mailto:&#99;&#104;&#114;&#105;&#115;&#116;&#111;&#112;&#104;&#64;&#99;&#111;&#100;&#101;&#112;&#117;&#110;&#107;&#116;&#46;&#100;&#101;">
-            Get in touch!
-          </a>
+          <span
+            dangerouslySetInnerHTML={{
+              __html: useTranslation('homepage-contact-text'),
+            }}
+          />
         </Article>
       </span>
     </section>

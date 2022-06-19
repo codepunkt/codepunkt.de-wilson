@@ -1,14 +1,14 @@
 import { FunctionalComponent } from 'preact'
-import { ContentPageProps } from '../../../wilson/dist/types'
-import styles from './index.module.scss'
-import useOffset from '../hooks/use-offset'
+import { ContentPageProps } from 'wilson'
+import styles from '../index.module.scss'
+import useOffset from '../../hooks/use-offset'
 import anime from 'animejs'
 import { useEffect } from 'preact/hooks'
 import { useMediaQuery } from '@react-hook/media-query'
 import {
   LineAnimationNarrow,
   LineAnimationWide,
-} from '../components/line-animation'
+} from '../../components/line-animation'
 
 export const Page: FunctionalComponent<ContentPageProps> = ({ title }) => {
   const { x, y, ref, isDizzy } = useOffset()

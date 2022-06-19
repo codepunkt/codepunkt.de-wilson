@@ -1,13 +1,13 @@
-import { ContentPageProps, LayoutProps } from 'wilson'
+import { PageProps } from 'wilson'
 import { FunctionalComponent } from 'preact'
 import { formatPostDate } from '../utils/date'
 
-const BlogLayout: FunctionalComponent<LayoutProps> = (props) => {
-  const { children, date, frontmatter, title } = props
+const BlogLayout: FunctionalComponent<PageProps> = (props) => {
+  const { children, date, title } = props
 
   return (
     <>
-      <time dateTime={date}>{formatPostDate(date)}</time>
+      <time dateTime={`${date}`}>{formatPostDate(date)}</time>
       <h1>{title}</h1>
       {children}
     </>

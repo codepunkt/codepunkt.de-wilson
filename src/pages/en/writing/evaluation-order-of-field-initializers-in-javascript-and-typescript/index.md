@@ -3,6 +3,7 @@ draft: false
 title: Evaluation order of field initializers in JavaScript and TypeScript
 date: 2021-06-14
 description: This article introduces you to my latest side project and describes a problem that I encountered because I did not understand the sequence between initializing class fields and calling a parent constructor. It then continues to explain how class fields are initialized in javascript and typescript and how I solved my initial problem.
+lang: en
 taxonomies:
   categories:
     - writing

@@ -1,7 +1,7 @@
 import { Frontmatter, SelectPageProps } from 'wilson'
 import { FunctionalComponent } from 'preact'
-import styles from './writing.module.scss'
-import { formatPostDate } from '../utils/date'
+import styles from '../writing.module.scss'
+import { formatPostDate } from '../../utils/date'
 
 export const Page: FunctionalComponent<SelectPageProps> = (props) => {
   const { title, pagination, contentPages } = props

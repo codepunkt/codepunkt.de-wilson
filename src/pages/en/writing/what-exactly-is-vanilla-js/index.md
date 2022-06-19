@@ -3,6 +3,7 @@ draft: false
 title: What exactly is vanilla JavaScript?
 date: 2020-09-21
 description: The term "vanilla JavaScript" has caused some confusion amongst beginners. This post explains the origins of the term "vanilla" and how it relates to computer software and the JavaScript language.
+lang: en
 taxonomies:
   categories:
     - writing

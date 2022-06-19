@@ -6,6 +6,8 @@ import MenuToggle from './menu-toggle'
 import ModeToggle from './mode-toggle'
 import styles from './menu.module.scss'
 import { useLocation } from 'preact-iso'
+import { useAllLanguages, useCurrentLanguageCode, useTranslation } from 'wilson'
+import menuEntries from '../menu.json'
 
 /**
  * @TODO activeClassName on links
@@ -44,21 +46,6 @@ export const SOCIAL_LINKS = [
   },
 ]
 
-const MENU_ENTRIES = [
-  {
-    url: '/',
-    name: 'Home',
-  },
-  {
-    url: '/writing/',
-    name: 'My Writing',
-  },
-  {
-    url: '/about/',
-    name: 'About Me',
-  },
-]
-
 const Menu: FunctionalComponent = () => {
   const [isOpen, setIsOpen] = useState(false)
   const wasOpen = usePrevious(isOpen)
@@ -90,19 +77,32 @@ const Menu: FunctionalComponent = () => {
   return (
     <div class={styles.wrapper}>
       <ol class={styles.smallMenu}>
-        {MENU_ENTRIES.map(({ url, name }) => (
-          <li key={name} class={styles.smallMenuEntry}>
-            <a
-              href={url}
-              class={styles.smallMenuLink}
-              data-active={
-                url === '/' ? currentUrl === url : currentUrl.startsWith(url)
-              }
-            >
-              {name}
-            </a>
-          </li>
-        ))}
+        {menuEntries.map(({ url, name }) => {
+          const languageCode = useCurrentLanguageCode()
+          const translatedName = useTranslation(name)
+          const allLanguages = useAllLanguages()
+          url = `${languageCode ? `/${languageCode}` : ''}${url}`
+          return (
+            <li key={translatedName} class={styles.smallMenuEntry}>
+              <a
+                href={url}
+                class={styles.smallMenuLink}
+                data-active={
+                  url === '/' ||
+                  url.match(
+                    new RegExp(
+                      `^\/(${allLanguages.map((l) => l.code).join('|')})\/$`
+                    )
+                  )
+                    ? currentUrl === url
+                    : currentUrl.startsWith(url)
+                }
+              >
+                {translatedName}
+              </a>
+            </li>
+          )
+        })}
       </ol>
       <ModeToggle />
       <MenuToggle isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -112,22 +112,35 @@ const Menu: FunctionalComponent = () => {
           <nav class={styles.nav}>
             <div class={styles.content}>
               <ol class={styles.menu}>
-                {MENU_ENTRIES.map(({ url, name }) => (
-                  <li key={name}>
-                    <a
-                      href={url}
-                      onClick={closeMenu}
-                      class={styles.menuLink}
-                      data-active={
-                        url === '/'
-                          ? currentUrl === url
-                          : currentUrl.startsWith(url)
-                      }
-                    >
-                      {name}
-                    </a>
-                  </li>
-                ))}
+                {menuEntries.map(({ url, name }) => {
+                  const languageCode = useCurrentLanguageCode()
+                  const translatedName = useTranslation(name)
+                  const allLanguages = useAllLanguages()
+                  url = `${languageCode ? `/${languageCode}` : ''}${url}`
+                  return (
+                    <li key={translatedName}>
+                      <a
+                        href={url}
+                        onClick={closeMenu}
+                        class={styles.menuLink}
+                        data-active={
+                          url === '/' ||
+                          url.match(
+                            new RegExp(
+                              `^\/(${allLanguages
+                                .map((l) => l.code)
+                                .join('|')})\/$`
+                            )
+                          )
+                            ? currentUrl === url
+                            : currentUrl.startsWith(url)
+                        }
+                      >
+                        {translatedName}
+                      </a>
+                    </li>
+                  )
+                })}
               </ol>
               <footer class={styles.menuFooter}>
                 <ol class={styles.menuSocial}>

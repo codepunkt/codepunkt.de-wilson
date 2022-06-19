@@ -3,6 +3,7 @@ draft: false
 title: Generating beautiful Open Graph images with Node.js
 date: 2021-01-01
 description: Open graph images provide nice previews when sharing your website. This article explains how to automatically generate open graph images with Node.js and integrate the results into a Gatsby site.
+lang: en
 taxonomies:
   categories:
     - writing

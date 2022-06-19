@@ -8,8 +8,12 @@
     "dark": "#0e1923"
   },
   "text": {
-    "light": "#28342b",
-    "dark": "#C5C5DD"
+    "light": "#000000",
+    "dark": "#ffffff"
+  },
+  "text-light": {
+    "light": "#4a4e4b",
+    "dark": "#c6cada"
   },
   "logo": {
     "light": "#28342b",
@@ -25,7 +29,7 @@
   },
   "headline": {
     "light": "#286b10",
-    "dark": "#fff"
+    "dark": "#ecd8ff"
   },
   "code": {
     "light": "#2f86da",
@@ -45,7 +49,7 @@
   },
   "link": {
     "light": "#415CFF",
-    "dark": "#5686F5"
+    "dark": "#f0c963"
   },
   "link-line": {
     "light": "#7c8c80",

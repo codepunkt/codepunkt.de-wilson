@@ -8,13 +8,14 @@ import styles from './layout.module.scss'
 import Header from '../components/header'
 import Footer from '../components/footer'
 import ColorModeProvider from '../components/color-mode-provider'
+import { PageProps } from 'wilson'
 
-const Layout: FunctionalComponent = ({ children }) => {
+const Layout: FunctionalComponent<PageProps> = ({ children, translations }) => {
   return (
     <ColorModeProvider>
       <Header />
       <main class={styles.main}>{children}</main>
-      <Footer />
+      <Footer translations={translations} />
     </ColorModeProvider>
   )
 }

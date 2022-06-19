@@ -1,0 +1,12 @@
+@import '../assets/mixins.scss';
+
+.profileImage {
+  float: left;
+  width: 400px;
+  margin: 0.4rem 1.5rem 1rem 0;
+}
+
+.columns {
+  column-count: 2;
+  column-gap: 2rem;
+}

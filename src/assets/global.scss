@@ -1,4 +1,5 @@
 @import './mixins.scss';
+@import './markdown.scss';
 
 // box sizing
 *,
@@ -61,7 +62,6 @@ select {
   --font-monospace: 'Fira Code', Menlo, Monaco, Consolas, Courier New, monospace;
 
   --header-height: 80px;
-  --line-height: 5px;
   --content-padding: 16px;
   --text-size: 16px;
   --text-size-small: 13px;
@@ -82,7 +82,6 @@ select {
   }
 
   @include responsive(sm) {
-    --line-height: 8px;
     --content-padding: 32px;
     --text-size: 18px;
     --text-size-small: 16px;
@@ -118,7 +117,6 @@ html {
   font-kerning: normal;
   font-size: var(--text-size);
   font-family: var(--font-body);
-  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -moz-font-feature-settings: 'kern', 'liga', 'clig', 'calt';
@@ -143,19 +141,7 @@ body {
   min-height: 100%;
   color: var(--color-text-light);
   background: var(--color-bg);
-  line-height: 1.72;
-  padding: var(--line-height) 0;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: var(--line-height);
-    background: var(--color-line);
-    z-index: 3;
-  }
+  line-height: calc(1ex / 0.32);
 }
 
 hr {
@@ -164,17 +150,32 @@ hr {
   border-bottom: 1px solid currentColor;
 }
 
-h1,
+h1 {
+  color: var(--color-headline);
+}
+
 h2,
 h3,
 h4,
 h5,
 h6 {
   color: var(--color-headline);
+  [data-mode='dark'] & {
+    color: var(--color-headline);
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-headline);
   font-weight: 600;
   margin-top: 0;
   margin-bottom: 1rem;
+  line-height: 1.4;
 }
 h1 {
   font-size: var(--h1-size);
@@ -222,7 +223,7 @@ ul {
 blockquote {
   margin: 0 0 1.5rem;
   padding: 0.75rem 0.75rem 0.75rem 32px;
-  border-left: 5px solid var(--color-line);
+  border-left: 5px solid red;
   background-color: var(--color-blockquote-bg);
   --color-blockquote-bg: #e3eae6;
   [data-mode='dark'] & {

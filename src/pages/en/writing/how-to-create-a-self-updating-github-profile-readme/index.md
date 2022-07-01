@@ -13,17 +13,15 @@ taxonomies:
     - Unified
 ---
 
+![Bird flocks in the sky](./5wxay7D7yjE.jpg 'Photo by Aron Visuals on Unsplash')
+
 ## Why READMEs?
 
 README files are added to a repository to communicate important information about your project. They are usually the first thing a visitor will see when visiting a repository and a core part of well-documented open-source software.
 
-GitHub released the profile READMEs feature in the middle of 2020. A profile READMEs is a nice way to share information about yourself with the community and is shown at the top of your profile page, above pinned repositories and other information. My current profile README displayed on my GitHub profile at the time of writing this article looks like this:
-
-<a href="https://github.com/codepunkt" target="_blank" rel="noopener noreferrer">
+GitHub released the profile READMEs feature in the middle of 2020. A profile READMEs is a nice way to share information about yourself with the community and is shown at the top of your profile page, above pinned repositories and other information. My current profile README displayed on my [GitHub profile](https://github.com/codepunkt) at the time of writing this article looks like this:
 
 ![Screenshot of GitHub profile with profile README for codepunkt](./profile-readme.png)
-
-</a>
 
 ## Creating a profile README
 

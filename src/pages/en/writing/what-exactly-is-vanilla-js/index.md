@@ -12,6 +12,8 @@ taxonomies:
     - Glossary
 ---
 
+![Boat on a lake](./rkAyh3MlAMA.jpg 'Photo by Yalamber Subba on Unsplash')
+
 ## The term _vanilla_
 
 The term _vanilla_ originates from the traditional standard flavor of ice cream, vanilla flavor. It's an adjective that describes the simplest version of something, without any optional extras.
@@ -26,13 +28,7 @@ Various computing-related things like software, hardware or algorithms are calle
 
 There is no official definition of _vanilla JavaScript_ or _vanilla JS_. These terms refer to the language itself, without any external additions like libraries, frameworks or other packages. Because JavaScript is standardized as ECMAScript, _vanilla JavaScript_ includes the standard language features described in the [ECMA-262 specification](https://tc39.es/ecma262/).
 
-<p>
-  <img
-    src="./ecmascript-and-apis.svg"
-    alt="Venn diagram of Vanilla JavaScript"
-    style="margin:0 auto;"
-  ></img>
-</p>
+![Venn diagram of Vanilla JavaScript](./ecmascript-and-apis.svg)
 
 Additional APIs are assumed to be present when programming JavaScript, depending on the context.
 

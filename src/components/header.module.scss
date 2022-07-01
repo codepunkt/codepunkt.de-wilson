@@ -20,7 +20,7 @@
 .logo {
   height: var(--logo-height);
   margin-top: calc(var(--logo-height) / 3);
-  margin-left: 6px;
+  margin-left: 4px;
 
   margin-right: -110px;
   @include responsive(sm) {

@@ -37,7 +37,7 @@
   width: 100vmax;
   height: 100vmax;
   position: fixed;
-  top: calc(-49.5vmax + var(--line-height) + var(--header-height) / 2);
+  top: calc(-49.5vmax + var(--header-height) / 2);
   right: calc(-50vmax + var(--content-padding) + var(--button-size) / 2);
   background: var(--color-bg-alt);
   border-radius: 50%;
@@ -62,9 +62,7 @@
   left: 0;
   z-index: 2;
   --padding: var(--content-padding);
-  --header-offset: calc(
-    var(--line-height) + (var(--header-height) - var(--logo-height) / 2)
-  );
+  --header-offset: calc((var(--header-height) - var(--logo-height) / 2));
   padding: var(--padding);
   padding-top: calc(var(--padding) + var(--header-offset));
 }

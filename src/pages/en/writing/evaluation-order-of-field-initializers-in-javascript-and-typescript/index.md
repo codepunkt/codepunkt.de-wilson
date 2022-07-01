@@ -12,6 +12,8 @@ taxonomies:
     - TypeScript
 ---
 
+![Clouds](./In7RdU6QY2M.jpg 'Photo by Ales Krivec on Unsplash')
+
 In the last few weeks I've started working on a new side project called [Wilson](https://github.com/wilsonjs/wilson). Wilson is an opinionated static site generator that is optimized for performance and has a small but well-chosen feature set that lends itself perfectly to build coding blogs and documentation sites.
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 932.96 254.05" style="width:300px;max-width:60vw;margin:1.5rem auto;display:block;">

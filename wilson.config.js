@@ -98,7 +98,7 @@ module.exports = {
         'footer-about':
           'Ich helfe Software-Entwicklern dabei, in kürzerer Zeit bessere Produkte zu entwickeln.',
         'homepage-writing-headline': 'Ständiges Lernen',
-        'homepage-writing-text': `In der Software-Entwicklung lernt man nie aus. Ich schreibe über das, was ich gelernt habe auf meinem <a href="/writing/">Blog</a> und tausche mich auf <a href="https://twitter.com/code_punkt" rel="noopener noreferrer" target="_blank">Twitter</a> mit euch darüber aus.`,
+        'homepage-writing-text': `In der Software-Entwicklung lernt man nie aus. Ich schreibe über das, was ich gelernt habe auf meinem <a href="/writing/">Blog</a> und tausche mich auf <a href="https://twitter.com/code_punkt" rel="noopener noreferrer" target="_blank">Twitter</a> darüber aus.`,
         'homepage-interest-headline': 'Was mich motiviert',
         'homepage-interest-text': `Ich bin ein neugieriger und aufgeschlossener Mensch der Technik, gutes Design und Computerspiele mag. Ich setze mich für eine positive Fehlerkultur ein, denn aus Fehlern lernt man am besten.`,
         'homepage-world-headline': 'Die Weiten des Internets',
@@ -121,7 +121,7 @@ module.exports = {
     </script>`
   },
   layouts: {
-    nestedLayouts: [{ pattern: 'writing/**/*', layout: 'blog' }],
+    nestedLayouts: [{ pattern: '@(en|de)/writing/**/*', layout: 'blog' }],
   },
   performance: {
     linkPreloadTest: (arg) => {
@@ -187,6 +187,10 @@ module.exports = {
     inlineCode: {
       marker: '•',
     },
+    replaceColor: (oldColor) =>
+      ({
+        '#dcdcaa': '#b1bbf4',
+      }[oldColor.toLowerCase()] || oldColor),
   },
   feeds: [
     {

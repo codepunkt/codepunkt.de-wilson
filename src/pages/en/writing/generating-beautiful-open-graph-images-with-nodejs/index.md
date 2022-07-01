@@ -14,6 +14,8 @@ taxonomies:
     - Gatsby
 ---
 
+![Sunset over yellow corn fields](./sYffw0LNr7s.jpg 'Photo by Federico Respini on Unsplash')
+
 ## What is Open Graph?
 
 When you share a link on a social network or chat app, [Open graph](https://ogp.me/) makes it "unfold" into an image, title, and description. This happens on a lot of platforms like Facebook, Twitter, WhatsApp, Discord, Slack and others.
@@ -22,23 +24,11 @@ Open graph was created by Facebook in 2010 and **standardizes the use of metadat
 
 If you don't have open graph metadata, the platforms where your website is shared will make a best effort to create a preview of your content. A blog post from this site shared on Twitter **without open graph metadata** looks like this:
 
-<p>
-  <img
-    src="./twitter-without-og.png"
-    alt="Twitter share without open graph meta tags"
-    style="margin:0 auto;"
-  ></img>
-</p>
+![Twitter share without open graph meta tags](./twitter-without-og.png)
 
 Unfortunately, your content will not stand out next to other content that is posted with open graph metadata. A link to the same blog post, but this time **with open graph metadata** could look like this instead:
 
-<p>
-  <img
-    src="./twitter-with-og.png"
-    alt="Twitter share with open graph meta tags"
-    style="margin:0 auto;"
-  ></img>
-</p>
+![Twitter share with open graph meta tags](./twitter-with-og.png)
 
 Compared to the previous one, this will catch people's attention.
 
@@ -64,13 +54,7 @@ If you decide to use open graph meta tags for your site and would like to have *
 
 To avoid these drawbacks, I was looking for a way to generate open graph images for blog posts and other content that I publish to this [Gatsby](https://www.gatsbyjs.com/) site. After throwing together a design in Adobe Illustrator, I knew the open graph images for my blog posts should look like this:
 
-<p>
-  <img
-    src="./og-image-design.jpg"
-    alt="Codepunkt open graph image"
-    style="margin:0 auto;"
-  ></img>
-</p>
+![Codepunkt open graph image](./og-image-design.jpg)
 
 I derived some requirements from this design. I want to provide a background image that stays the same across all open graph images. I want to be able to add flexible text parts on top, set in a specific font and color to match this website's typography:
 
@@ -96,13 +80,7 @@ The browsers automated by these packages are native dependencies, which can be h
 
 We can use Node.js image processing libraries that support typography to create the open graph images for us. [Jimp](https://www.npmjs.com/package/jimp) is written entirely in JavaScript **without any native dependencies**. However, it only supports bitmap fonts.
 
-<p>
-  <img
-    src="./truetype-vs-bitmap.svg"
-    alt="Truetype vs bitmap font"
-    style="margin:0 auto;"
-  ></img>
-</p>
+![Truetype vs bitmap font](./truetype-vs-bitmap.svg)
 
 This is problematic, because bitmap fonts can’t be styled or scaled without quality loss―a font file is needed for every combination of font size, color and weight. [gatsby-remark-social-cards](https://www.npmjs.com/package/gatsby-remark-social-cards) is one of the libraries that uses Jimp to create open graph images.
 
@@ -120,13 +98,7 @@ It allows us to render two texts on top of a background image, one at the top, t
 
 Awesome! 💜
 
-<p>
-  <img
-    src="./og-image-outline.png"
-    alt="Codepunkt open graph image outline"
-    style="margin:0 auto;"
-  ></img>
-</p>
+![Codepunkt open graph image outline](./og-image-outline.png)
 
 However, to be able to generate open graph images based on my design, this is not enough.
 
